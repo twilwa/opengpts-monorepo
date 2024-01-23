@@ -33,7 +33,7 @@ services:
       POSTGRES_DB: mydatabase
       OPENAI_API_KEY: 
       ASSISTANTS_URL: 
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   postgres_data:

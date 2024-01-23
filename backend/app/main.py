@@ -1,14 +1,20 @@
 from fastapi import FastAPI
-from routers import gpt_router, user_router, thread_router
-from db.database import engine
-from db import models
+from fastapi.staticfiles import StaticFiles
+from .routers import gpt_router, user_router, thread_router
+from .db.database import engine
+from .db import models
 from fastapi.middleware.cors import CORSMiddleware
-from .api.api_v1.api import login, auth
+from .api.api_v1 import auth
+import os
 
 app = FastAPI()
 
-app.include_router(login.router)
-app.include_router(auth.router)
+
+app.include_router(auth.router, prefix="/api/v1", tags=["auth"])
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

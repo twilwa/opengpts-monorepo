@@ -1,16 +1,15 @@
-from jose import jwt
-from datetime import datetime, timedelta
-from datetime import timezone
-from fastapi import FastAPI, Depends
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from fastapi.staticfiles import StaticFiles
-from fastapi import APIRouter
-from app.db import crud, models, schemas
-from app.db.database import SessionLocal
+from jose import jwt
+from datetime import datetime, timedelta, timezone
 import requests
 import os
 import dotenv
+from app.db import crud, models, schemas
+from app.db.database import SessionLocal
+
+
 dotenv.load_dotenv()
 
 
@@ -23,7 +22,7 @@ def get_db():
         db.close()
 
 
-app = FastAPI()
+
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -37,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # This is the URL of your domain name plus /login/google
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @router.get("/login/google")
 async def login_google():
@@ -152,7 +151,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode["exp"] = expire
     return jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
 
-@app.get("/token")
+@router.get("/token")
 async def get_token(token: str = Depends(oauth2_scheme)):
     """
     Function to get the token.
@@ -164,7 +163,6 @@ async def get_token(token: str = Depends(oauth2_scheme)):
     
     return jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
 
-if __name__ == "__main__":
-    import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+    

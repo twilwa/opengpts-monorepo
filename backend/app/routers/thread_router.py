@@ -10,11 +10,11 @@ bearer 99d834cd-b052-4d56-9914-818aacca8533
 
 from typing import Dict, List
 from fastapi import APIRouter, Depends, HTTPException
-from utils.parsers import get_user_id
-from db.database import SessionLocal
+from app.utils.parsers import get_user_id
+from app.db.database import SessionLocal
 from sqlalchemy.orm import Session
-from db import crud, schemas
-from models.thread import (
+from app.db import crud, schemas
+from app.models.thread import (
     CreateThread,
     MessagesRunStepResponse,
     CustomThread,
@@ -24,7 +24,7 @@ from models.thread import (
 )
 from datetime import datetime
 import time
-from utils.api import get_run_steps, openai_client
+from app.utils.api import get_run_steps, openai_client
 from openai.types.beta.threads.runs import RunStep
 
 

@@ -1,14 +1,14 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
 
-from utils.parsers import get_user_id
-from db.database import SessionLocal
-from models.gpt import UpsertGpt, Gpt
+from app.utils.parsers import get_user_id
+from app.db.database import SessionLocal
+from app.models.gpt import UpsertGpt, Gpt
 
 from sqlalchemy.orm import Session
-from db import crud, schemas
+from app.db import crud, schemas
 from openai.types import FileObject
-from utils.api import openai_client
+from app.utils.api import openai_client
 
 router = APIRouter()
 
